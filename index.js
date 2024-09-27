@@ -55,3 +55,32 @@ function getCurrentTime() {
 // Update the time every second
 setInterval(getCurrentTime, 1000);
 
+// Get the user's current location using geolocation
+navigator.geolocation.getCurrentPosition(
+    position => {
+        // Fetch weather data using the user's coordinates
+        fetch(`https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial`)
+        .then(res => {
+            if (!res.ok) {
+                // Throw an error if weather data is unavailable
+                throw Error("Weather data not available");
+            }
+            return res.json();  // Convert the response to JSON format
+        })
+        .then(data => {
+            const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;  // Construct the weather icon URL
+            
+            // Display the weather icon, temperature, and city name
+            document.getElementById("weather").innerHTML = `
+                <img src="${iconUrl}" />
+                <p class="weather-temp">${Math.round(data.main.temp)}º</p>
+                <p class="weather-city">${data.name}</p>
+            `;
+        })
+        .catch(err => console.error(err));  // Log an error if the request fails
+    },
+    error => {
+        // Log geolocation error if it fails
+        console.error(`Geolocation Error: ${error.message}`);
+    }
+);
