@@ -17,3 +17,30 @@ fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&que
         // Display a fallback author name
         document.getElementById("author").textContent = `By: Dodi Achmad`;
     });
+
+// Fetch Dogecoin data from the CoinGecko API
+fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
+.then(res => {
+    if (!res.ok) {
+        // Throw an error if the response is not OK
+        throw Error("Something went wrong");
+    }
+    console.log(res.status);  // Log the response status
+    return res.json();  // Convert the response to JSON format
+})
+.then(data => {
+    // Display the Dogecoin image and name
+    document.getElementById("crypto-top").innerHTML = `
+    <img src=${data.image.small} />
+    <span>${data.name}</span>
+`;
+    
+    // Display current, highest, and lowest Dogecoin prices in ZAR
+    document.getElementById("crypto").innerHTML += `
+    <p>🎯: R${data.market_data.current_price.zar}</p>
+    <p>👆: R${data.market_data.high_24h.zar}</p>
+    <p>👇: R${data.market_data.low_24h.zar}</p>
+`;
+})
+.catch(err => console.error(err));  // Log an error if the request fails
+
