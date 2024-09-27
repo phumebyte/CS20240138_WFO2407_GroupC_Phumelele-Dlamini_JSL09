@@ -44,3 +44,14 @@ fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
 })
 .catch(err => console.error(err));  // Log an error if the request fails
 
+// Function to get and display the current time
+function getCurrentTime() {
+    const date = new Date();
+    
+    // Display the time in short format (hh:mm AM/PM)
+    document.getElementById("time").textContent = date.toLocaleTimeString("en-us", { timeStyle: "short" });
+}
+
+// Update the time every second
+setInterval(getCurrentTime, 1000);
+
