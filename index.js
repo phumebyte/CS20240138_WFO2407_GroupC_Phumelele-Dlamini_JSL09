@@ -73,7 +73,7 @@ navigator.geolocation.getCurrentPosition(
             // Display the weather icon, temperature, and city name
             document.getElementById("weather").innerHTML = `
                 <img src="${iconUrl}" />
-                <p class="weather-temp">${Math.round(data.main.temp)}º</p>
+                <p class="weather-temp">${Math.round(data.main.temp)}ºF</p>
                 <p class="weather-city">${data.name}</p>
             `;
         })
